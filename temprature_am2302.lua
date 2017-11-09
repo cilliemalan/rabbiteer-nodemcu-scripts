@@ -1,4 +1,4 @@
--- This script reads temprature and humidity from the AM2302
+-- This script reads temprature and humidity from an AM2302
 -- every 5 seconds and prints it out.
 
 --these are the data and clock pin numbers
