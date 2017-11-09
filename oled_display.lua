@@ -1,8 +1,7 @@
 -- dispaly something on the OLED display
 
 -- data and clock pins
-sda = 1 -- SDA Pin
-scl = 2 -- SCL Pin
+sda, scl = 1, 2
 
 function init_OLED(sda,scl)
      sla = 0x3C
@@ -12,8 +11,6 @@ function init_OLED(sda,scl)
      disp:setFontRefHeightExtendedText()
      disp:setDefaultForegroundColor()
      disp:setFontPosTop()
-     --Rotate Display if needed
-     --disp:setRot180()
 end
 
 function print_OLED(message)
