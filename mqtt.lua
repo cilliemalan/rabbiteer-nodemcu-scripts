@@ -1,7 +1,7 @@
 -- publishes and subscribes on mqtt
 
-client = "client"
-password = "password"
+client = "<username>"
+password = "<password>"
 url = "iot.rabbiteer.io"
 
 -- the mqtt client
@@ -11,21 +11,27 @@ m = mqtt.Client(
     client,    -- username
     password); -- password
 
--- handlers
-function on_mqtt_message(client,topic,message) print("got message on " .. topic .. ": " .. message) end
-function on_mqtt_error(client, reason) print("error"); print(reason);end
-
--- function to call when connected
-function on_mqtt_connected(m)
-    print("connected")
-    -- subscribe to a channel
-    m:subscribe("/slack", 0)
-    -- publish a message to a channel
-    m:publish("/slack", "hello from " .. client, 0, 0)
+-- this will be called when a message is received
+function on_mqtt_message(client,topic,message)
+    print("got message on " .. topic .. ": " .. message)
 end
 
--- bind the handlers
-m:on("message", on_mqtt_message)
+-- this will be called if there is an error
+function on_mqtt_error(client, reason)
+    print("error: "..reason);
+    node.restart();
+end
+
+-- this will be called after connected
+function on_mqtt_connected(m)
+    print("connected")
+
+    -- subscribe to a channel
+    m:subscribe("slack/mqtt", 0)
+
+    -- publish a message to a channel
+    m:publish("slack/mqtt", "hello from " .. client, 0, 0)
+end
 
 -- connect
 m:connect(
@@ -36,3 +42,5 @@ m:connect(
     on_mqtt_connected,  -- connect callback
     on_mqtt_error)      -- error callback
 
+-- bind message handler
+m:on("message", on_mqtt_message)
