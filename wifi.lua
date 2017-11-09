@@ -1,9 +1,9 @@
 --configure wifi
 
-wifi_cfg = {
+wifi_cfg =
+{
     ssid = "<ssid>",
-    pwd = "<pwd>",
-    save = true
+    pwd = "<pwd>"
 }
 
 -- configure this device to connect to this access point.
